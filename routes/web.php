@@ -1,20 +1,13 @@
 <?php
 
+use App\Http\Controllers\TodolistFormController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
-require __DIR__.'/auth.php';
+Route::get('/', [TodolistFormController::class, 'index']);
+Route::get('/create-page', [TodolistFormController::class, 'createPage']);
+Route::post('/create', [TodolistFormController::class, 'create']);
+Route::get('/edit-page/{id}', [TodolistFormController::class, 'editPage']);
+Route::post('/edit', [TodolistFormController::class, 'edit']);
+Route::get('/delete-page/{id}', [TodolistFormController::class, 'deletePage']);
+Route::post('/delete/{id}', [TodolistFormController::class, 'delete']);
